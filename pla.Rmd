@@ -1,0 +1,41 @@
+Title
+========================================================
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring web pages (click the **Help** toolbar button for more details on using R Markdown).
+
+When you click the **Knit HTML** button a web page will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r}
+summary(cars)
+```
+d <- 2
+pt1 <- 2 * runif(2) - 1
+pt2 <- 2 * runif(2) - 1
+
+my_slope <- (pt2[1] - pt1[1]) / (pt2[0] - pt1[0])
+my_intercept <- pt1[1] - my_slope * pt1[0]
+
+line_y <- function(x){
+  return (my_slope * x + my_intercept)
+}
+
+separate <- function(x,y){
+  line_val <- line_y(x)
+  
+  if (y > line_val){
+    return (1)
+  } else {
+    return (-1)
+  }
+}
+
+separate(1,2)
+
+
+
+You can also embed plots, for example:
+
+```{r fig.width=7, fig.height=6}
+plot(cars)
+```
+

@@ -24,7 +24,10 @@ classify <- function(my_point){
 }
 
 update_weights <- function(update_index){
-  return (w + my_answers[update_index] * c(my_data[update_index,],1))
+  new_w <- w + my_answers[update_index] * c(my_data[update_index,],1)
+  new_new_w <- w + my_answers[update_index] * my_data[update_index,]
+  cat(new_w," ",new_new_w, "\n")
+  return new_new_w
 }
 
 d <- 2
@@ -32,16 +35,20 @@ N <- 100
 
 total_iter <- 0
 
-for (i in 1:1000){
+
+for (i in 1:1){
   plot.new()
   print(i)
   pt_x <- 2 * runif(2) - 1
   pt_y <- 2 * runif(2) - 1
   
-  my_slope <- (pt_y[2] - pt_y[1]) / (pt_x[2] - pt_x[1])
-  my_intercept <- pt_y[1] - my_slope * pt_x[1]
+  #my_slope <- (pt_y[2] - pt_y[1]) / (pt_x[2] - pt_x[1])
+  #my_intercept <- pt_y[1] - my_slope * pt_x[1]
+  my_slope <- saved_line$slope
+  my_intercept <- saved_line$intercept
   
-  my_data <- matrix(2 * runif(N * 2) - 1, ncol=2)
+  #my_data <- matrix(2 * runif(N * 2) - 1, ncol=2)
+  my_data <- saved_data
   my_answers <- apply(my_data,1,separate)
   
   #plot(my_data, col=ifelse(my_answers == 1, 'blue', ifelse(my_answers == -1, 'green', 'red')))
@@ -62,10 +69,10 @@ for (i in 1:1000){
     #print(w)
     my_classes <- apply(my_data,1,classify)
     
-    #plot(my_data, pch=ifelse(my_classes != my_answers, 'x', 'o'),col=ifelse(my_answers == 1, 'blue', ifelse(my_answers == -1, 'green', 'red')))
-    #abline(l_intercept,l_slope, col="red")
-    #abline(my_intercept, my_slope,col="green")
-    #Sys.sleep(0.5)
+    plot(my_data, pch=ifelse(my_classes != my_answers, 'x', 'o'),col=ifelse(my_answers == 1, 'blue', ifelse(my_answers == -1, 'green', 'red')))
+    abline(l_intercept,l_slope, col="red")
+    abline(my_intercept, my_slope,col="green")
+    Sys.sleep(0.5)
     if(all(my_answers == my_classes)){
       total_iter <- total_iter + iter_ctr
       break
