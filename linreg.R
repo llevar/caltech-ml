@@ -86,7 +86,7 @@ w2_q5 <- function(){
                     "num_sample" = 1000, 
                     "num_replicates" = 1,
                     "test_on_sample" = FALSE,
-                    "apply_pla" = TRUE)
+                    "apply_pla" = FALSE)
   total_iter <- 0
   
   e_in = 0
